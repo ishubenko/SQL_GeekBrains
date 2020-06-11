@@ -1,1 +1,1 @@
---INSERT "Hello world";
+--INSERT "Hello world!";
