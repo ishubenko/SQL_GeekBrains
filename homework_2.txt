@@ -1,0 +1,174 @@
+#1.Установите СУБД MySQL. Создайте в домашней директории файл .my.cnf, задав в нем логин и пароль, который указывался при установке.
+
+ishubenko@VirtualUbuntu:~$ ls -la .my.cnf
+-rw------- 1 ishubenko ishubenko 34 июн 13 16:23 .my.cnf
+ishubenko@VirtualUbuntu:~$ cat .my.cnf 
+[mysql]
+user=root
+password=mysql8
+ishubenko@VirtualUbuntu:~$ mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.20-0ubuntu0.20.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> 
+
+===============================================================================================
+#2.Создайте базу данных example, разместите в ней таблицу users, состоящую из двух столбцов, числового id и строкового name.
+mysql> CREATE DATABASE example;
+Query OK, 1 row affected (0.42 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| example            |
+| geek_brains_test   |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.10 sec)
+
+mysql> USE example;
+Database changed
+mysql> CREATE TABLE users (
+    -> id INT,
+    -> name VARCHAR(255) 
+    -> );
+Query OK, 0 rows affected (3.64 sec)
+
+mysql> SHOW TABLES;
++-------------------+
+| Tables_in_example |
++-------------------+
+| users             |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> DESC users;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| id    | int          | YES  |     | NULL    |       |
+| name  | varchar(255) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+
+===============================================================================================
+#3.Создайте дамп базы данных example из предыдущего задания, разверните содержимое дампа в новую базу данных sample.
+
+ishubenko@VirtualUbuntu:~$ mysqldump -uroot -p example > mydump.sql
+Enter password: 
+ishubenko@VirtualUbuntu:~$
+
+mysql> CREATE DATABASE sample;
+Query OK, 1 row affected (0.51 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| example            |
+| geek_brains_test   |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sample             |
+| sys                |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> USE sample;
+Database changed
+mysql> SOURCE mydump.sql
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.15 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (3.34 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.54 sec)
+
+Query OK, 0 rows affected (0.18 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_sample |
++------------------+
+| users            |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> DESC users;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| id    | int          | YES  |     | NULL    |       |
+| name  | varchar(255) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> 
+
+===============================================================================================
+#4.(по желанию) Ознакомьтесь более подробно с документацией утилиты mysqldump. Создайте дамп единственной таблицы help_keyword базы данных mysql. Причем добейтесь того, чтобы дамп содержал только первые 100 строк таблицы.
+
+ishubenko@VirtualUbuntu:~$ mysqldump -uroot -p --where="true limit 100" mysql help_keyword > mydump_2.sql
+Enter password: 
+ishubenko@VirtualUbuntu:~$
+
