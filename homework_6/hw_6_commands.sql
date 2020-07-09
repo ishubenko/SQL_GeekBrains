@@ -295,10 +295,14 @@ WHERE user_id IN (SELECT user_id FROM profiles WHERE gender = 'm')),
 
 -- -------------------------------------ЗАДАНИЕ 4 --------------------------------------
 -- Подсчитать общее количество лайков десяти самым молодым пользователям (сколько лайков получили 10 самых молодых пользователей
+SELECT * FROM likes;
+DESC likes ;
+ALTER TABLE likes ADD FOREIGN KEY (target_id) REFERENCES users(id);
+
 SELECT 
 user_id, 
 birthday,
-(SELECT COUNT(id) FROM likes WHERE user_id = profiles.user_id ) AS likes 
+(SELECT COUNT(id) FROM likes WHERE target_id = profiles.user_id ) AS likes 
 FROM profiles 
 ORDER BY birthday DESC LIMIT 10;
 
@@ -308,7 +312,7 @@ SELECT SUM(likes) FROM
 (SELECT 
 -- user_id, 
 -- birthday,
-(SELECT COUNT(id) FROM likes WHERE user_id = profiles.user_id ) AS likes 
+(SELECT COUNT(id) FROM likes WHERE target_id = profiles.user_id ) AS likes 
 FROM profiles 
 ORDER BY birthday DESC LIMIT 10) AS total;
 
