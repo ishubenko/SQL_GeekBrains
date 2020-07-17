@@ -51,7 +51,7 @@ WHERE target_type_id = 2;
 -- критерии активности необходимо определить самостоятельно (кол-во постов)
 
  SELECT * FROM posts WHERE user_id = 46;
- SELECT * FROM likes WHERE user_id = 46;
+ SELECT * FROM likes WHERE user_id = 1;
  SELECT * FROM messages WHERE from_user_id = 46;
 -- SELECT * from users;
 
@@ -70,6 +70,14 @@ LEFT JOIN messages ON level_2.id_of_user = messages.from_user_id
 GROUP BY level_2.id_of_user
 ORDER BY total_activity 
 LIMIT 10;
+
+SELECT users.id AS id_of_user, users.first_name, COUNT(posts.id) AS numb_post FROM users 
+    JOIN posts ON users.id = posts.user_id
+    JOIN posts ON users.id = posts.user_id
+    JOIN posts ON users.id = posts.user_id
+    WHERE
+GROUP BY users.id;
+
 
 
 
