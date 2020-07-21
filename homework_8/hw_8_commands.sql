@@ -71,13 +71,20 @@ GROUP BY level_2.id_of_user
 ORDER BY total_activity 
 LIMIT 10;
 
-SELECT users.id AS id_of_user, users.first_name, COUNT(posts.id) AS numb_post FROM users 
-    JOIN posts ON users.id = posts.user_id
-    JOIN posts ON users.id = posts.user_id
-    JOIN posts ON users.id = posts.user_id
-    WHERE
-GROUP BY users.id;
-
+SELECT users.id, first_name,
+  COUNT(DISTINCT messages.id) +
+  COUNT(DISTINCT likes.id) +
+  COUNT(DISTINCT posts.id) AS activity
+FROM users
+  LEFT JOIN messages
+    ON users.id = messages.from_user_id 
+  LEFT JOIN likes
+    ON users.id = likes.user_id
+  LEFT JOIN posts
+    ON users.id = posts.user_id 
+GROUP BY users.id
+ORDER BY activity 
+LIMIT 10;
 
 
 
