@@ -123,7 +123,7 @@ CREATE FUNCTION hello()
 RETURNS TINYTEXT NO SQL
 BEGIN
   DECLARE hour INT;
-  SET hour = HOUR(NOW));
+  SET hour = HOUR(NOW);
   CASE 
     WHEN  hour BETWEEN 6 AND 11
 	THEN RETURN "Доброе утро";
