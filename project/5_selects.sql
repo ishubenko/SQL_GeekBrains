@@ -18,7 +18,7 @@ SELECT
   teams.team_city 
 FROM players 
   JOIN teams ON players.team_id = teams.id 
-WHERE team_id = 1 -- команда Х
+WHERE team_id = 15 -- команда Х
 ORDER BY amplua;
 
 -- Турнирная таблица------------------------------------------------------------------------
@@ -31,7 +31,7 @@ SELECT
   teams_tournaments.total_games 
 FROM teams_tournaments
 JOIN teams ON teams_tournaments.team_id = teams.id
-WHERE teams_tournaments.tournament_id = 1
+WHERE teams_tournaments.tournament_id = 3
 ORDER BY teams_tournaments.total_points DESC;
 
 -- Выод списка последних статей на главную страницу------------------------------------------

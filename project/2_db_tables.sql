@@ -73,13 +73,13 @@ CREATE TABLE games (
 DROP TABLE IF EXISTS transfers;
 CREATE TABLE transfers (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, -- 'Идентификатор трансфера',
-  player_id INT NOT NULL,
+  player_id INT UNSIGNED NOT NULL,
   team_from_id INT UNSIGNED NOT NULL,
   team_to_id INT UNSIGNED NOT NULL,
   trnf_date DATE NOT NULL,
   created_at datetime DEFAULT CURRENT_TIMESTAMP,
   updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  FOREIGN KEY (player_id) REFERENCES players.id,
+  FOREIGN KEY (player_id) REFERENCES players(id),
   FOREIGN KEY (team_from_id) REFERENCES teams(id),
   FOREIGN KEY (team_to_id) REFERENCES teams(id)
 );
@@ -128,13 +128,20 @@ CREATE TABLE teams_tournaments (
 );
 CREATE INDEX teams_totals_idx ON teams_tournaments(total_points,total_scored,total_missed,total_games);
 
--- 10-standings------------------------------------------------------------------------------------------------------
--- Турнирная таблица
--- DROP TABLE IF EXISTS standings;
--- CREATE TABLE standings (
---  team_id
---  points
--- );
+-- 10-comments------------------------------------------------------------------------------------------------------
+DROP TABLE IF EXISTS comments;
+CREATE TABLE comments (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id INT UNSIGNED NOT NULL,
+  post_id INT UNSIGNED NOT NULL,
+  comment_text TEXT,
+  created_at datetime DEFAULT CURRENT_TIMESTAMP,
+  updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (post_id) REFERENCES posts(id),
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- 11----------------------------------------------------------------------------------------------------------------
 
 
 

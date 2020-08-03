@@ -1,4 +1,4 @@
 
 # SQL_GeekBrains
-# Lesson 11
+# Курсовой проект
 
