@@ -1,6 +1,6 @@
 -- Списки турниров с участниками------------------------------------------------------------------------
 SELECT  
-  teams.team_name AS team,
+  teams.name AS team,
   teams_tournaments.tournament_id,
   tournaments.tournaments_name,
   tournaments.season 
@@ -12,9 +12,9 @@ WHERE tournaments.id = 2; -- 1 Футбол Премьер Лига, 2 Футб�
 
 -- Состав команды Х-------------------------------------------------------------------------
 SELECT 
-  players.f_l_name,
+  players.first_last_name,
   JSON_EXTRACT(players.params, '$.position') AS amplua,
-  teams.team_name,
+  teams.name,
   teams.team_city 
 FROM players 
   JOIN teams ON players.team_id = teams.id 
@@ -24,7 +24,7 @@ ORDER BY amplua;
 -- Турнирная таблица------------------------------------------------------------------------
 SELECT 
   teams_tournaments.team_id,
-  teams.team_name,
+  teams.name,
   teams_tournaments.total_points,
   teams_tournaments.total_scored,
   teams_tournaments.total_missed,

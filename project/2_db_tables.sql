@@ -13,21 +13,21 @@ CREATE TABLE media (
 DROP TABLE IF EXISTS teams;
 CREATE TABLE teams (
   id int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, -- 'Идентификатор команды',
-  team_name varchar(150) NOT NULL, -- 'название команды',
+  name varchar(150) NOT NULL, -- 'название команды',
   team_city varchar(150) NOT NULL, -- 'город команды',
-  team_logo INT UNSIGNED NOT NULL, -- 'ссылка на фото значка/эмблемы команды',
+  team_logo_id INT UNSIGNED NOT NULL, -- 'ссылка на фото значка/эмблемы команды',
   created_at datetime DEFAULT CURRENT_TIMESTAMP, -- 'Время создания строки',
   updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 'Время обновления строки',
   FOREIGN KEY (team_logo) REFERENCES media(id)
 );
-CREATE INDEX team_name_city_idx ON teams(team_name, team_city);
+CREATE INDEX team_name_city_idx ON teams(name, team_city);
 
 -- 3-----------------------------------------------------------------------------------------------------------------
 DROP TABLE IF EXISTS players;
 CREATE TABLE players (
   id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY, -- Идентификатор спортсмена
   team_id int unsigned NOT NULL, -- team
-  f_l_name varchar(150) NOT NULL, -- Фамилия Имя
+  first_last_name varchar(150) NOT NULL, -- Фамилия Имя
   birthday_at date DEFAULT NULL,
   params JSON, -- Данные игррока: позиция(нападающий/защитник), рост, вес
   created_at datetime DEFAULT CURRENT_TIMESTAMP, 
@@ -40,7 +40,7 @@ CREATE INDEX players_name_idx ON players(f_l_name);
 DROP TABLE IF EXISTS tournaments;
 CREATE TABLE tournaments (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, -- 'Идентификатор турнира',
-  type_of_sport varchar(150) NOT NULL, -- 'вид спорта',
+  type_of_sport ENUM('football','basketball'), -- 'вид спорта',
   tournaments_name varchar(150) NOT NULL, -- 'название турнира',
   season varchar(150) NOT NULL, -- 'год проведения турнира',
   created_at datetime DEFAULT CURRENT_TIMESTAMP,
@@ -76,7 +76,7 @@ CREATE TABLE transfers (
   player_id INT UNSIGNED NOT NULL,
   team_from_id INT UNSIGNED NOT NULL,
   team_to_id INT UNSIGNED NOT NULL,
-  trnf_date DATE NOT NULL,
+  transfer_date DATE NOT NULL,
   created_at datetime DEFAULT CURRENT_TIMESTAMP,
   updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (player_id) REFERENCES players(id),
